@@ -1,35 +1,49 @@
-// only js with fetch api
+$(document).ready(function () {
+  $("#btn-get-data").click(function () {
+    // option 1 - jquery with $.get()
+    // $.get("https://akademia108.pl/api/ajax/get-post.php")
+    //   .done(function (data) {
+    //     // 1a. create elements in jquery by $('<selector></selector>')
+    //     // 1b. add text inner created elements by .text()
 
-let btnGetData = document.getElementById("btn-get-data");
-let content = document.getElementById("content");
+    //     let pId = $("<p></p>").text(`Post ID: ${data.id}`);
+    //     let pUserId = $("<p></p>").text(`User ID: ${data.userId}`);
+    //     let pTitle = $("<p></p>").text(`Title ID: ${data.title}`);
+    //     let pBody = $("<p></p>").text(`Body ID: ${data.body}`);
+    //     let hr = $("<hr/>");
 
-const getData = () => {
-  fetch("https://akademia108.pl/api/ajax/get-post.php", {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // create elements
-      let pId = document.createElement("p");
-      let pUserId = document.createElement("p");
-      let pTitle = document.createElement("p");
-      let pBody = document.createElement("p");
-      let hr = document.createElement("hr");
+    //     // add elements to html by append, inner div id="content"
+    //     $("#content").append(pId);
+    //     $("#content").append(pUserId);
+    //     $("#content").append(pTitle);
+    //     $("#content").append(pBody);
+    //     $("#content").append(hr);
+    //   })
+    //   .fail(function (error) {
+    //     console.error(error);
+    //   });
 
-      // add text inner created elements
-      pId.innerText = `Post ID: ${data.id}`;
-      pUserId.innerText = `User ID: ${data.userId}`;
-      pTitle.innerText = `Title: ${data.title}`;
-      pBody.innerText = `Body: ${data.body}`;
+    // option 2 - jquery with $.getJSON()
+    $.getJSON("https://akademia108.pl/api/ajax/get-post.php")
+      .done(function (data) {
+        // 1a. create elements in jquery by $('<selector></selector>')
+        // 1b. add text inner created elements by .text()
 
-      // add elements to html
-      content.appendChild(pId);
-      content.appendChild(pUserId);
-      content.appendChild(pTitle);
-      content.appendChild(pBody);
-      content.appendChild(hr);
-    });
-};
+        let pId = $("<p></p>").text(`Post ID: ${data.id}`);
+        let pUserId = $("<p></p>").text(`User ID: ${data.userId}`);
+        let pTitle = $("<p></p>").text(`Title ID: ${data.title}`);
+        let pBody = $("<p></p>").text(`Body ID: ${data.body}`);
+        let hr = $("<hr/>");
 
-// events by click
-btnGetData.addEventListener("click", getData);
+        // add elements to html by append, inner div id="content"
+        $("#content").append(pId);
+        $("#content").append(pUserId);
+        $("#content").append(pTitle);
+        $("#content").append(pBody);
+        $("#content").append(hr);
+      })
+      .fail(function (error) {
+        console.error(error);
+      });
+  });
+});
